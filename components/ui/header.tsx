@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "./mode-toggle";
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Header() {
     const pathName = usePathname();
@@ -47,7 +48,14 @@ export default function Header() {
                             <Link href="/categorias" className="hover:text-foreground/80">
                                 Ver todas las categorías
                             </Link>
-
+                            <SignedIn>
+                                <Link
+                                    href="/admin/pedidos"
+                                    className="hover:text-foreground/80"
+                                >
+                                    Panel de administración
+                                </Link>
+                            </SignedIn>
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -85,6 +93,19 @@ export default function Header() {
                         </div>
                     </form>
                     <ModeToggle />
+
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <SignInButton>
+                            <Button variant="ghost" size="icon">
+                                <User className="h-5 w-5" />
+                                <span className="sr-only">Iniciar sesión</span>
+                            </Button>
+                        </SignInButton>
+                    </SignedOut>
+
                     <Button variant="ghost" size="icon" asChild className="relative">
                         <Link href="/carrito">
                             <ShoppingCart className="h-5 w-5" />
