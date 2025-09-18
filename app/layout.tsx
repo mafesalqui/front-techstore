@@ -4,7 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import "./globals.css";
-import Header from "@/components/ui/header";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
               <main className="flex-1 w-full mx-auto lg:max-w-[1200px] xl:max-w-[1200px]">
                 {children}
               </main>
+              <Footer />
             </div>
           </ThemeProvider>
         </body>
