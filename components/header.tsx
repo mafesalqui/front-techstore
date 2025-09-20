@@ -8,16 +8,21 @@ import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "./mode-toggle";
 import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { useCart } from "@/components/cart-context";
+import CartSheetContent from "@/components/cart-sheet-content";
 
 export default function Header() {
     const pathName = usePathname();
     const navigation = [
         { name: "Inicio", href: "/" },
-        { name: "Laptops", href: "/categoria/laptops" },
-        { name: "Celulares", href: "/categoria/celulares" },
-        { name: "Tablets", href: "/categoria/tablets" },
-        { name: "Accesorios", href: "/categoria/accesorios" },
+        { name: "Laptops y Computadores", href: "/categoria/laptops-y-computadores" },
+        { name: "Smartphones y tablets", href: "/categoria/smartphones-y-tablets" },
+        { name: "Accesorios y Gadgets", href: "/categoria/accesorios-y-gadgets" },
+        { name: "Componentes y Almacenamiento", href: "/categoria/componentes-y-almacenamiento" },
     ];
+
+    const { items } = useCart();
+    const totalItems = items.length;
 
     return (
         <header className="sticky top-0 z-10 w-full border-b bg-background/95 backdrop-blur-supports-[backdrop-filter]:bg-background/60">
@@ -45,9 +50,6 @@ export default function Header() {
                                     {item.name}
                                 </Link>
                             ))}
-                            <Link href="/categorias" className="hover:text-foreground/80">
-                                Ver todas las categorías
-                            </Link>
                             <SignedIn>
                                 <Link
                                     href="/admin/pedidos"
@@ -106,12 +108,28 @@ export default function Header() {
                         </SignInButton>
                     </SignedOut>
 
-                    <Button variant="ghost" size="icon" asChild className="relative">
-                        <Link href="/carrito">
-                            <ShoppingCart className="h-5 w-5" />
-                            <span className="sr-only">Ver Carrito</span>
-                        </Link>
-                    </Button>
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant="ghost" size="icon" className="relative">
+                                <ShoppingCart className="h-5 w-5" />
+                                <span className="sr-only">Ver Carrito</span>
+                                {totalItems > 0 && (
+                                    <span className="absolute top-0 right-0 h-4 w-4 rounded-full bg-primary text-[10px] flex items-center justify-center text-white">
+                                        {totalItems}
+                                    </span>
+                                )}
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+                            <SheetTitle>
+                                <div className="grid gap-6 p-4 text-lg font-medium">
+                                    Tu carrito
+                                </div>
+                            </SheetTitle>
+                            <CartSheetContent />
+                        </SheetContent>
+                    </Sheet>
+
                 </div>
             </div>
         </header>

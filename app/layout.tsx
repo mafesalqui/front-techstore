@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CartProvider } from "@/components/cart-context";
 
 import "./globals.css";
 import Header from "@/components/header";
@@ -39,13 +40,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1 w-full mx-auto lg:max-w-[1200px] xl:max-w-[1200px]">
-                {children}
-              </main>
-              <Footer />
-            </div>
+            <CartProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1 w-full mx-auto lg:max-w-[1200px] xl:max-w-[1200px]">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+            </CartProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,15 +1,21 @@
 export interface Product {
     id: string
+    documentId: string
     name: string
     slug: string
     description: string
     price: number
     oldPrice?: number
     images: string[]
-    category: string
+    categoryName: string
+    categorySlug: string
     stock: number
     features: string[]
     isNew?: boolean
+}
+
+export interface CartItem extends Product {
+    qty: number;
 }
 
 export interface Category {
