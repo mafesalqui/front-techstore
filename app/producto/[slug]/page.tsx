@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductById } from "@/services/services";
-import ProductClient from "@/components/product-section";
+import ProductSection from "@/components/product-section";
 
 interface ProductPageProps {
     params: { slug: string };
@@ -11,5 +11,5 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
     if (!product) return notFound();
 
-    return <ProductClient product={product} />;
+    return <ProductSection product={product} />;
 }
